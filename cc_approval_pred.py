@@ -546,23 +546,23 @@
 # ].drop(columns=["ID", "Is high risk"])
 
 
-import logging
-import joblib
-import streamlit as st
-from streamlit_lottie import st_lottie_spinner
-import requests
-import time
+# import logging
+# import joblib
+# import streamlit as st
+# from streamlit_lottie import st_lottie_spinner
+# import requests
+# import time
 
-# Load Lottie animation
-def load_lottieurl(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
+# # Load Lottie animation
+# def load_lottieurl(url: str):
+#     r = requests.get(url)
+#     if r.status_code != 200:
+#         return None
+#     return r.json()
 
-lottie_loading_an = load_lottieurl(
-    "https://assets3.lottiefiles.com/packages/lf20_szlepvdh.json"
-)
+# lottie_loading_an = load_lottieurl(
+#     "https://assets3.lottiefiles.com/packages/lf20_szlepvdh.json"
+# )
 
 import logging
 import time
