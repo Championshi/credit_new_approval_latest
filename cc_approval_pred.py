@@ -754,7 +754,7 @@ def make_prediction(age, income, debt, marital_status, family_member_count,
 
         # Approval condition based on car and property ownership with income and debt checks
         if car_ownership == "Yes" and property_ownership == "Yes":
-            if income > 500 and dept_amount < 400:
+            if income >= 300 and dept_amount < 180:
                 logger.info("Approved: You can apply for a credit card.")
                 return "Approved: You can apply for a credit card."
             else:
