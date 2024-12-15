@@ -573,67 +573,7 @@ import numpy as np
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# Function to make the prediction based on the given conditions
-# def make_prediction(age, income, debt, marital_status, family_member_count, 
-#                     dwelling_type, employment_status, employment_length, 
-#                     education_level, car_ownership, property_ownership, 
-#                     work_phone, phone, email, dept_amount):
-#     try:
-#         logger.info("Simulating model prediction based on manual logic")
-        
-#         logger.info(f"Input Values: Age={age}, Income={income}, Debt={debt}, "
-#                      f"Marital Status={marital_status}, Family Count={family_member_count}, "
-#                      f"Dwelling Type={dwelling_type}, Employment Status={employment_status}, "
-#                      f"Employment Length={employment_length}, Education={education_level}, "
-#                      f"Car Ownership={car_ownership}, Property Ownership={property_ownership}, "
-#                      f"Work Phone={work_phone}, Phone={phone}, Email={email}, Debt Amount={dept_amount}") 
-         
-#          # Rejection condition based on income and employment length (new condition)
-#         if income == 0 and employment_length <= 7:  # Low income and short employment length
-#             logger.warning(f"Rejected: Income is {income} and employment length is {employment_length} years.")
-#             return "Rejected: Low income and employment strength."
 
-        
-#         # Approval condition based on income >= 843 and debt amount == 0
-#         if income >= 843 and dept_amount == 0:
-#             logger.info(f"Approved: Income {income} is sufficient and no debt.")
-#             return "Approved: Income is sufficient and no debt."
-
-#         # Rejection condition based on debt-to-income ratio
-#         if dept_amount > income * 0.5:  # Debt-to-Income ratio greater than 50%
-#             logger.warning(f"Debt amount {dept_amount} is too high for the income {income}. Rejected.")
-#             return "Rejected: Debt amount too high for income."
-
-#         #approval condition if not car not property income greater than 900 and dept_amt <=90 then approved
-
-#         # New approval condition for no car, no property, income > 900, and debt <= 90
-#         if car_ownership != "Yes" and property_ownership != "Yes" and income > 900 and dept_amount <= 90:
-#             logger.info(f"Approved: No car or property, but sufficient income ({income}) and low debt ({dept_amount}).")
-#             return "Approved: No car or property, but sufficient income and low debt."
-
-#         # Approval condition based on income and employment length
-#         if income >= 50000 and employment_length >= 4:  # Example: high income and stable job
-#             logger.info("Approved: High income and stable employment.")
-#             return "Approved: you can apply for Credit Card."
-
-#         # Additional checks for approval
-#         if marital_status == "Married" and family_member_count > 1:  # Married with dependents
-#             logger.info(f"Approved: Married with dependents (family count {family_member_count}).")
-#             return "Approved: you can apply for Credit Card"
-         
-           
-#         if car_ownership == "Yes" and property_ownership == "Yes" :  # Owns both car and property
-#             logger.info("Approved: Owns both car and property.")
-#             return "Approved: you can apply for Credit Card."
-
-#         # If none of the above conditions are met, it's a neutral case, but let's lean towards rejection
-#         logger.info("Rejected: Does not meet approval criteria.")
-#         return "Rejected: Does not meet approval criteria."
-    
-#     except Exception as e:
-#         logger.error(f"Unexpected error: {str(e)}")
-#         st.error(f"An unexpected error occurred: {str(e)}")
-#         return "Error: Unable to process the request."
 # def make_prediction(age, income, debt, marital_status, family_member_count, 
 #                     dwelling_type, employment_status, employment_length, 
 #                     education_level, car_ownership, property_ownership, 
@@ -696,6 +636,76 @@ logger.setLevel(logging.INFO)
 #         st.error(f"An unexpected error occurred: {str(e)}")
 #         return "Error: Unable to process the request."
 
+
+
+# def make_prediction(age, income, debt, marital_status, family_member_count, 
+#                     dwelling_type, employment_status, employment_length, 
+#                     education_level, car_ownership, property_ownership, 
+#                     work_phone, phone, email, dept_amount):
+#     try:
+#         logger.info("Simulating model prediction based on manual logic")
+        
+#         logger.info(f"Input Values: Age={age}, Income={income}, Debt={debt}, "
+#                      f"Marital Status={marital_status}, Family Count={family_member_count}, "
+#                      f"Dwelling Type={dwelling_type}, Employment Status={employment_status}, "
+#                      f"Employment Length={employment_length}, Education={education_level}, "
+#                      f"Car Ownership={car_ownership}, Property Ownership={property_ownership}, "
+#                      f"Work Phone={work_phone}, Phone={phone}, Email={email}, Debt Amount={dept_amount}") 
+
+
+#         # Check if all contact methods are "No"
+#         if work_phone == "No" and phone == "No" and email == "No":
+#             logger.warning("Rejected: No contact information provided.")
+#             return "Rejected: You can't apply for a credit card."
+
+#         # Calculate debt-to-income ratio
+#         if income > 0:  # Avoid division by zero
+#             debt_to_income_ratio = dept_amount / income
+#             logger.info(f"Calculated Debt-to-Income Ratio: {debt_to_income_ratio:.2f}")
+#         else:
+#             debt_to_income_ratio = 1  # If income is 0, set DTI to 1 (100%)
+
+#         # Rejection condition based on debt-to-income ratio
+#         if debt_to_income_ratio > 0.43:  # DTI ratio greater than 43%
+#             logger.warning(f"Rejected: Debt-to-Income ratio {debt_to_income_ratio:.2f} exceeds 43%.")
+#             return "Rejected: You can't apply for a credit card."
+
+#         # Approval condition if car ownership or property ownership is "No" and DTI <= 43%
+#         if car_ownership == "No" or property_ownership == "No":
+#             if debt_to_income_ratio <= 0.43:
+#                 logger.info("Approved: You can apply for a credit card.")
+#                 return "Approved: You can apply for a credit card."
+#             else:
+#                 logger.warning(f"Rejected: Debt-to-Income ratio {debt_to_income_ratio:.2f} exceeds 43%.")
+#                 return "Rejected: You can't apply for a credit card."
+
+#         # Approval condition based on car and property ownership with income and debt checks
+#         if car_ownership == "Yes" and property_ownership == "Yes":
+#             if income > 500 and dept_amount < 400:
+#                 logger.info("Approved: You can apply for a credit card.")
+#                 return "Approved: You can apply for a credit card."
+#             else:
+#                 logger.warning(f"Rejected: Income {income} is <= 500 or Debt {dept_amount} is >= 400.")
+#                 return "Rejected: You can't apply for a credit card."
+
+#         # Approval condition based on income and employment length
+#         if income >= 50000 and employment_length >= 2:  # Example: high income and stable job
+#             logger.info("Approved: You can apply for a credit card.")
+#             return "Approved: You can apply for a credit card."
+
+#         # Additional checks for approval
+#         if marital_status == "Married" and family_member_count > 1:  # Married with dependents
+#             logger.info(f"Approved: You can apply for a credit card.")
+#             return "Approved: You can apply for a credit card."
+
+#         # If none of the above conditions are met, it's a neutral case, but let's lean towards rejection
+#         logger.info("Rejected: You can't apply for a credit card.")
+#         return "Rejected: You can't apply for a credit card."
+    
+#     except Exception as e:
+#         logger.error(f"Unexpected error: {str(e)}")
+#         st.error(f"An unexpected error occurred: {str(e)}")
+#         return "Error: Unable to process the request."
 def make_prediction(age, income, debt, marital_status, family_member_count, 
                     dwelling_type, employment_status, employment_length, 
                     education_level, car_ownership, property_ownership, 
@@ -709,7 +719,6 @@ def make_prediction(age, income, debt, marital_status, family_member_count,
                      f"Employment Length={employment_length}, Education={education_level}, "
                      f"Car Ownership={car_ownership}, Property Ownership={property_ownership}, "
                      f"Work Phone={work_phone}, Phone={phone}, Email={email}, Debt Amount={dept_amount}") 
-
 
         # Check if all contact methods are "No"
         if work_phone == "No" and phone == "No" and email == "No":
@@ -727,6 +736,12 @@ def make_prediction(age, income, debt, marital_status, family_member_count,
         if debt_to_income_ratio > 0.43:  # DTI ratio greater than 43%
             logger.warning(f"Rejected: Debt-to-Income ratio {debt_to_income_ratio:.2f} exceeds 43%.")
             return "Rejected: You can't apply for a credit card."
+
+        # Approval condition if income-to-debt ratio is valid and other factors are satisfied
+        if income >= 300 and employment_length >= 2:
+            if debt_to_income_ratio <= 0.43 and (car_ownership == "Yes" or property_ownership == "Yes"):
+                logger.info("Approved: You can apply for a credit card.")
+                return "Approved: You can apply for a credit card."
 
         # Approval condition if car ownership or property ownership is "No" and DTI <= 43%
         if car_ownership == "No" or property_ownership == "No":
@@ -749,11 +764,6 @@ def make_prediction(age, income, debt, marital_status, family_member_count,
         # Approval condition based on income and employment length
         if income >= 50000 and employment_length >= 2:  # Example: high income and stable job
             logger.info("Approved: You can apply for a credit card.")
-            return "Approved: You can apply for a credit card."
-
-        # Additional checks for approval
-        if marital_status == "Married" and family_member_count > 1:  # Married with dependents
-            logger.info(f"Approved: You can apply for a credit card.")
             return "Approved: You can apply for a credit card."
 
         # If none of the above conditions are met, it's a neutral case, but let's lean towards rejection
@@ -945,7 +955,79 @@ if predict_bt:
 
     else:
         st.error("An error occurred while processing your predicting")
-    # if "Approved" in prediction:
+
+
+
+# def make_prediction(age, income, debt, marital_status, family_member_count, 
+#                     dwelling_type, employment_status, employment_length, 
+#                     education_level, car_ownership, property_ownership, 
+#                     work_phone, phone, email, dept_amount):
+#     try:
+#         logger.info("Simulating model prediction based on manual logic")
+        
+#         logger.info(f"Input Values: Age={age}, Income={income}, Debt={debt}, "
+#                      f"Marital Status={marital_status}, Family Count={family_member_count}, "
+#                      f"Dwelling Type={dwelling_type}, Employment Status={employment_status}, "
+#                      f"Employment Length={employment_length}, Education={education_level}, "
+#                      f"Car Ownership={car_ownership}, Property Ownership={property_ownership}, "
+#                      f"Work Phone={work_phone}, Phone={phone}, Email={email}, Debt Amount={dept_amount}") 
+
+#         # Check if all contact methods are "No"
+#         if work_phone == "No" and phone == "No" and email == "No":
+#             logger.warning("Rejected: No contact information provided.")
+#             return "Rejected: You can't apply for a credit card."
+
+#         # Calculate debt-to-income ratio
+#         if income > 0:  # Avoid division by zero
+#             debt_to_income_ratio = dept_amount / income
+#             logger.info(f"Calculated Debt-to-Income Ratio: {debt_to_income_ratio:.2f}")
+#         else:
+#             debt_to_income_ratio = 1  # If income is 0, set DTI to 1 (100%)
+
+#         # Rejection condition based on debt-to-income ratio
+#         if debt_to_income_ratio > 0.43:  # DTI ratio greater than 43%
+#             logger.warning(f"Rejected: Debt-to-Income ratio {debt_to_income_ratio:.2f} exceeds 43%.")
+#             return "Rejected: You can't apply for a credit card."
+
+#         # Approval condition if income-to-debt ratio is valid and other factors are satisfied
+#         if income >= 300 and employment_length >= 2:
+#             if debt_to_income_ratio <= 0.43 and (car_ownership == "Yes" or property_ownership == "Yes"):
+#                 logger.info("Approved: You can apply for a credit card.")
+#                 return "Approved: You can apply for a credit card."
+
+#         # Approval condition if car ownership or property ownership is "No" and DTI <= 43%
+#         if car_ownership == "No" or property_ownership == "No":
+#             if debt_to_income_ratio <= 0.43:
+#                 logger.info("Approved: You can apply for a credit card.")
+#                 return "Approved: You can apply for a credit card."
+#             else:
+#                 logger.warning(f"Rejected: Debt-to-Income ratio {debt_to_income_ratio:.2f} exceeds 43%.")
+#                 return "Rejected: You can't apply for a credit card."
+
+#         # Approval condition based on car and property ownership with income and debt checks
+#         if car_ownership == "Yes" and property_ownership == "Yes":
+#             if income > 500 and dept_amount < 400:
+#                 logger.info("Approved: You can apply for a credit card.")
+#                 return "Approved: You can apply for a credit card."
+#             else:
+#                 logger.warning(f"Rejected: Income {income} is <= 500 or Debt {dept_amount} is >= 400.")
+#                 return "Rejected: You can't apply for a credit card."
+
+#         # Approval condition based on income and employment length
+#         if income >= 50000 and employment_length >= 2:  # Example: high income and stable job
+#             logger.info("Approved: You can apply for a credit card.")
+#             return "Approved: You can apply for a credit card."
+
+#         # If none of the above conditions are met, it's a neutral case, but let's lean towards rejection
+#         logger.info("Rejected: You can't apply for a credit card.")
+#         return "Rejected: You can't apply for a credit card."
+    
+#     except Exception as e:
+#         logger.error(f"Unexpected error: {str(e)}")
+#         st.error(f"An unexpected error occurred: {str(e)}")
+#         return "Error: Unable to process the request."
+
+#     # if "Approved" in prediction:
     #     # Success Case: Green Balloon for approval
     #     st.success(prediction)
     #     st.balloons()
